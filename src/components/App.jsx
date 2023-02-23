@@ -1,7 +1,15 @@
-import styled from "styled-components";
-import { Box } from "./box/Box";
-import { PhoneBook } from "./phonebook/PhoneBook";
-import { Contacts } from "./contacts/Contacts";
+import styled from 'styled-components';
+import { Box } from './box/Box';
+import LoaderWrapper from './loader/Loader';
+import { Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { SharedLayout } from './layout/Latout';
+import { HomeScreen } from './homescreen/HomeScreen';
+import { RestrictedRoute } from './routes/RestrictedRoute';
+import { PrivateRoute } from './routes/PrivateRoute';
+import LoginPage from 'pages/loginpage/LoginPage';
+import JoinPage from 'pages/joinpage/JoinPage';
+import { ContactsPage } from 'pages/contactspage/ContactsPage';
 
 const Title = styled.h1`
   border-radius: ${p=>p.theme.radii.normal};
@@ -14,29 +22,22 @@ const Title = styled.h1`
   font-family: ${p=>p.theme.fonts.monospace};
 `
 
-const TitleH2 = styled.h2`
-  text-align: center;
-  border-radius: ${p=>p.theme.radii.normal};
-  background-color: ${p=>p.theme.colors.accent};
-  margin: ${p=>p.theme.space[0]}px auto;
-  padding: ${p=>p.theme.space[2]}px;
-  margin-top: ${p=>p.theme.space[5]}px; 
-  font-weight: ${p=>p.theme.fontWeights.heading};
-  font-family: ${p=>p.theme.fonts.heading};
-`
-
 export const App = () => {
     return (
-      <Box height= "100%"  display= "flex" flexDirection="column" justifyContent= "space-evenly" alignItems= "center" fontSize= "40px" backgroundColor="backgroundSecondary">
+    <Box height= "100%"  display= "flex" flexDirection="column" justifyContent= "space-evenly" alignItems= "center" fontSize= "40px" backgroundColor="backgroundSecondary">
         <Title>Ukraine Win❤️</Title>
-        <Box display="flex" flexDirection="column" justifyContent= "space-evenly" alignItems= "center" as={"section"}>
-          <TitleH2>Phonebook</TitleH2>
-          <PhoneBook></PhoneBook>
-        </Box>
-        <Box display="flex" flexDirection="column" justifyContent= "space-evenly" alignItems= "center" as={"section"}>
-          <TitleH2>Contacts</TitleH2>
-          <Contacts></Contacts>
-        </Box>
+      <Box width="100%" display='flex' flexDirection='column' justifyContent='center' alignItems='center' pt={4}>
+      <Suspense fallback={<LoaderWrapper/>}>
+      <Routes>
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<HomeScreen />} />
+          <Route path="/login" element={<RestrictedRoute component={LoginPage} redirectTo={'/contacts'} />} />
+          <Route path="/register" element={<RestrictedRoute component={JoinPage} redirectTo={'/contacts'} />} />
+          <Route path="/contacts" element={<PrivateRoute component={ContactsPage} redirectTo={'/'} />} />
+        </Route>
+      </Routes>
+      </Suspense>
       </Box>
+    </Box>
     );
   }
