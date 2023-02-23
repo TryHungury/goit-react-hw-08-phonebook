@@ -66,18 +66,18 @@ const AddContactBtn = styled.button`
 export const PhoneBook = () => {
   const [state, setState] = useState({
     name: "",
-    phone: "",
+    number: "",
   })
 
   const contacts = useSelector(state => state.contacts)
 
-  const {name, phone} = state;
+  const {name, number} = state;
 
   const dispatch =  useDispatch()
 
   const reset = () => {
 
-    setState({name: "", phone: ""})
+    setState({name: "", number: ""})
   }
 
   const handleChange = (e) => {
@@ -105,7 +105,7 @@ export const PhoneBook = () => {
         const contact = {
           // id: nanoid(),
           name,
-          phone,
+          number,
         }
     
         // dispatch(contactsListAction(contact))
@@ -133,11 +133,11 @@ export const PhoneBook = () => {
       <TelInput
           placeholder="pls input your number..."
           type="tel"
-          name="phone"
+          name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={phone}
+          value={number}
           onChange={handleChange}>
       </TelInput>
       </Label>

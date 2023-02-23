@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Box } from './box/Box';
 import LoaderWrapper from './loader/Loader';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SharedLayout } from './layout/Latout';
 import { HomeScreen } from './homescreen/HomeScreen';
@@ -10,6 +10,8 @@ import { PrivateRoute } from './routes/PrivateRoute';
 import LoginPage from 'pages/loginpage/LoginPage';
 import JoinPage from 'pages/joinpage/JoinPage';
 import { ContactsPage } from 'pages/contactspage/ContactsPage';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshThunk } from 'redux/auth/auth.thunk';
 
 const Title = styled.h1`
   border-radius: ${p=>p.theme.radii.normal};
@@ -23,6 +25,14 @@ const Title = styled.h1`
 `
 
 export const App = () => {
+    const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(refreshThunk());
+    }
+  }, [dispatch, token])
     return (
     <Box height= "100%"  display= "flex" flexDirection="column" justifyContent= "space-evenly" alignItems= "center" fontSize= "40px" backgroundColor="backgroundSecondary">
         <Title>Ukraine Win❤️</Title>

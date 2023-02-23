@@ -116,8 +116,8 @@ export const Contacts = () => {
         <Box style={{listStyle: "none"}} display="flex" justifyContent= "center" alignItems= "center" as={"li"}>
             <Label>Find contacts by name<FilterInput placeholder="pls input name, which you want search..." name="filter" value={filter} onChange={handleFilterContacts}></FilterInput></Label>
         </Box>
-        {visibleContacts.map(({id, name, phone})=>{
-            return <ContactsItem key={id}>{name}: {phone}<DeleteContactBtn type="button" onClick={()=>handleDeleteContact(id)}>Delete</DeleteContactBtn></ContactsItem>
+        {visibleContacts.map(({id, name, number})=>{
+            return <ContactsItem key={id}>{name}: {number}<DeleteContactBtn type="button" onClick={()=>handleDeleteContact(id)}>Delete</DeleteContactBtn></ContactsItem>
         })}
     </Box>
       </>
