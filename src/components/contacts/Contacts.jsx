@@ -73,6 +73,7 @@ export const Contacts = () => {
   const contacts = useSelector(state => state.contacts)
   const isLoading = useSelector(state => state.contacts.isLoading)
   const error = useSelector(state => state.contacts.error)
+  const isLogin = useSelector(state => state.auth.isLoggedIn)
   const dispatch = useDispatch()
   
   const handleFilterContacts = (e) => {
@@ -90,12 +91,12 @@ export const Contacts = () => {
 
   useEffect(()=>{
     // if (!!contacts.items.length){
-
-      dispatch(fetchContactsThunk())
+      // console.log(isLogin)
+    isLogin && dispatch(fetchContactsThunk())
     // }
     // return
 
-  },[dispatch])
+  },[dispatch, isLogin])
 
   const visibleContacts = useMemo(()=>{ 
     const filterNormalize = filter.toLowerCase();

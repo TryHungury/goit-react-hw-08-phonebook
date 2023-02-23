@@ -25,7 +25,7 @@ const Title = styled.h1`
 `
 
 export const App = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
 
   useEffect(() => {
@@ -33,6 +33,7 @@ export const App = () => {
       dispatch(refreshThunk());
     }
   }, [dispatch, token])
+  
     return (
     <Box height= "100%"  display= "flex" flexDirection="column" justifyContent= "space-evenly" alignItems= "center" fontSize= "40px" backgroundColor="backgroundSecondary">
         <Title>Ukraine Win❤️</Title>
